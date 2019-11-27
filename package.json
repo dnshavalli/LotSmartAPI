@@ -1,0 +1,14 @@
+{
+  "name": "postman-newman-jenkins"
+  "version": "1.0.0",
+  "description": "newman-postman-jenkins",
+  "scripts": {
+    "api-tests-production": "newman run airtimeplan.json -e QA env.postman_environment  -g My Workspace.postman_globals"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Noorshavalli/LotSmartAPI.git"
+  },
+  "author": "NoorShavalli"
+ 
+}
