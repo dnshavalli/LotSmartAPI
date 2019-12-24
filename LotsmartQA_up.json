@@ -1,0 +1,1220 @@
+{
+	"info": {
+		"_postman_id": "4676f28a-5235-4f83-b528-43088ba64dcb",
+		"name": "Lotsmart QA",
+		"description": "LotSmart qa environment api reelase test suite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [],
+			"description": "This module covers add, edit deleting of users along with search user functinality\t\t",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8a38ade4-34b9-418b-b7fa-4f2a19e8bef0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "79ae3b6d-a350-448c-8777-fa4715db6793",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(9000);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "SD Queue",
+			"item": [
+				{
+					"name": "Login1QA_Pioneer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ddc8f801-de63-426e-9b70-acbaf8d71dfa",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has JSON body\", function () {",
+									"    pm.response.to.be.withBody && pm.response.to.be.json;",
+									"});",
+									"const jsondata= pm.response.json()",
+									"let token = jsondata.response.authToken",
+									"token = token.substring(7)",
+									"console.log(token)",
+									"pm.globals.set(\"bearer_token\",token);",
+									"pm.environment.set(\"variable_key\", \"variable_value\");",
+									"console.log(token.substring(5));",
+									"",
+									"pm.globals.set(\"authtoken_key\", jsondata.response.authToken);",
+									"console.log(pm.globals.get(\"authtoken_key\"))",
+									"console.log(jsondata)",
+									"",
+									"let accountId=jsondata.response.user.account.href",
+									"pm.globals.set(\"accountId\", accountId.substring(accountId.length-4));",
+									"console.log(accountId.substring(accountId.length-4))",
+									"",
+									"pm.test(\"User_id\", function () {",
+									"       pm.expect(jsondata.response.user.id).to.eql(19028);",
+									"});",
+									"",
+									"pm.test(\"LotSmart application verifcations\", function() {",
+									"    pm.expect(jsondata.response.user.applications[0].title).to.eql(pm.globals.get(\"applications1\"));",
+									"    pm.expect(jsondata.response.user.applications[1].title).to.eql(pm.globals.get(\"applications2\"))",
+									"})",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"authtoken_key\"));",
+									"});",
+									"",
+									"",
+									"/* sending multiple requests",
+									"var devices=pm.environment.get(\"deviceIds\");",
+									"",
+									"if(deviceIds && deviceIds.length > 0 ){",
+									" postman.setNextRequest(\"urlname or ID\");   ",
+									"}",
+									"else{",
+									"    postman.setNextRequest(null)",
+									"}",
+									"postman.setNextRequest(\"urlname or ID\")",
+									"*/",
+									"/* timeout or setting delay between requests ",
+									"use below command in Tests ",
+									"setTimeout(() => {},10000)",
+									"takes two arguments one is call empty back function another one is delay",
+									"*/",
+									"",
+									"// const customerId = Math.floor((Math.random()*100)+1);",
+									"//pm.globals.set(\"customerId\",customerId)",
+									"//console.log(customerId)",
+									"// {{$randomInt}}",
+									"//Math.random().toString(36).substring(7);",
+									"//const response = pm.response.json()'",
+									"//console.log();",
+									"",
+									"// pm.globals.set(\"orderid\", response.id)'",
+									"// in request body use orderid as {{orderid}}",
+									"//pm.variables.get(\"url\");  -> scope variables",
+									"//pm.globals.get(\"url\");   -> Global variables",
+									"// extemal json file to use in postman",
+									"// Using extenal file for data collections",
+									"//open a json file -> data.json",
+									"//[ {},{}] step1",
+									"// select collection runner  and select collection that would like to run",
+									"// -- click on select file option",
+									"// -- and select json file that has test data",
+									"// Redefine json data file [ {customerId : 900, ProductId : 200}, {customerId : 9040, ProductId : 2300},{customerId : 9010, ProductId : 2001}] from step1 ->2",
+									"// User above information request body properties {{customerId }} without double quetations",
+									"// Running test scripts in with environment variable",
+									"// 1) save all test validation to environament variables as a string+ in Pre-request script",
+									"// 2) call variable func in test script : eval(pm.environment.get(\"commonTests\"))();",
+									"// Import request from browser to post"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "77f6c633-acfe-47e3-a828-1cc7d0f210ec",
+								"exec": [
+									"var DeviceIds = pm.environment.get(\"DeviceIds\");",
+									"if (!DeviceIds)",
+									"{",
+									" DeviceIds = [127496,127497,127498,127499];",
+									"}",
+									"device =  DeviceIds.shift();",
+									"pm.environment.set(\"DeviceId\",device);",
+									"pm.environment.set(\"DeviceIds\",DeviceIds);",
+									"//if(!devices)",
+									"//{"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-app-key",
+								"type": "text",
+								"value": "{{x-app-key-pioneer}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"password\":\"{{password}}\",\"username\":\"{{username}}\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"login"
+							]
+						},
+						"description": "LogIn_Authtoken"
+					},
+					"response": []
+				},
+				{
+					"name": "LoginQA",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ddc8f801-de63-426e-9b70-acbaf8d71dfa",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has JSON body\", function () {",
+									"    pm.response.to.be.withBody && pm.response.to.be.json;",
+									"});",
+									"const jsondata= pm.response.json()",
+									"let token = jsondata.response.authToken",
+									"token = token.substring(7)",
+									"console.log(token)",
+									"pm.globals.set(\"bearer_token\",token);",
+									"pm.environment.set(\"variable_key\", \"variable_value\");",
+									"console.log(token.substring(5));",
+									"",
+									"pm.globals.set(\"authtoken_key\", jsondata.response.authToken);",
+									"console.log(pm.globals.get(\"authtoken_key\"))",
+									"console.log(jsondata)",
+									"",
+									"let accountId=jsondata.response.user.account.href",
+									"pm.globals.set(\"accountId\", accountId.substring(accountId.length-4));",
+									"console.log(accountId.substring(accountId.length-4))",
+									"",
+									"pm.test(\"User_id\", function () {",
+									"       pm.expect(jsondata.response.user.id).to.eql(19028);",
+									"});",
+									"",
+									"pm.test(\"LotSmart application verifcations\", function() {",
+									"    pm.expect(jsondata.response.user.applications[0].title).to.eql(pm.globals.get(\"applications1\"));",
+									"    pm.expect(jsondata.response.user.applications[1].title).to.eql(pm.globals.get(\"applications2\"))",
+									"})",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"authtoken_key\"));",
+									"});",
+									"",
+									"",
+									"/* sending multiple requests",
+									"var devices=pm.environment.get(\"deviceIds\");",
+									"",
+									"if(deviceIds && deviceIds.length > 0 ){",
+									" postman.setNextRequest(\"urlname or ID\");   ",
+									"}",
+									"else{",
+									"    postman.setNextRequest(null)",
+									"}",
+									"postman.setNextRequest(\"urlname or ID\")",
+									"*/",
+									"/* timeout or setting delay between requests ",
+									"use below command in Tests ",
+									"setTimeout(() => {},10000)",
+									"takes two arguments one is call empty back function another one is delay",
+									"*/",
+									"",
+									"// const customerId = Math.floor((Math.random()*100)+1);",
+									"//pm.globals.set(\"customerId\",customerId)",
+									"//console.log(customerId)",
+									"// {{$randomInt}}",
+									"//Math.random().toString(36).substring(7);",
+									"//const response = pm.response.json()'",
+									"//console.log();",
+									"",
+									"// pm.globals.set(\"orderid\", response.id)'",
+									"// in request body use orderid as {{orderid}}",
+									"//pm.variables.get(\"url\");  -> scope variables",
+									"//pm.globals.get(\"url\");   -> Global variables",
+									"// extemal json file to use in postman",
+									"// Using extenal file for data collections",
+									"//open a json file -> data.json",
+									"//[ {},{}] step1",
+									"// select collection runner  and select collection that would like to run",
+									"// -- click on select file option",
+									"// -- and select json file that has test data",
+									"// Redefine json data file [ {customerId : 900, ProductId : 200}, {customerId : 9040, ProductId : 2300},{customerId : 9010, ProductId : 2001}] from step1 ->2",
+									"// User above information request body properties {{customerId }} without double quetations",
+									"// Running test scripts in with environment variable",
+									"// 1) save all test validation to environament variables as a string+ in Pre-request script",
+									"// 2) call variable func in test script : eval(pm.environment.get(\"commonTests\"))();",
+									"// Import request from browser to post"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "77f6c633-acfe-47e3-a828-1cc7d0f210ec",
+								"exec": [
+									"var DeviceIds = pm.environment.get(\"DeviceIds\");",
+									"if (!DeviceIds)",
+									"{",
+									" DeviceIds = [127496,127497,127498,127499];",
+									"}",
+									"device =  DeviceIds.shift();",
+									"pm.environment.set(\"DeviceId\",device);",
+									"pm.environment.set(\"DeviceIds\",DeviceIds);",
+									"//if(!devices)",
+									"//{"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-app-key",
+								"type": "text",
+								"value": "{{x-app-key}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"password\":\"{{password}}\",\"username\":\"{{username}}\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"login"
+							]
+						},
+						"description": "LogIn_Authtoken"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "https://qaapi.lojack.com/v1/login - LogInQA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "936fca75-1ee9-475d-88b6-61944cb94074",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Response has JSON body\", function () {",
+							"    pm.response.to.be.withBody && pm.response.to.be.json;",
+							"});",
+							"",
+							"const jsondata= pm.response.json()",
+							"pm.globals.set(\"authtoken_key\", jsondata.response.authToken);",
+							"",
+							"console.log(pm.globals.get(\"authtoken_key\"))",
+							"console.log(jsondata)",
+							"",
+							"pm.test(\"User_id\", function () {",
+							"       pm.expect(jsondata.response.user.id).to.eql(19028);",
+							"});",
+							"",
+							"//pm.test(\"Body is correct\", function () {",
+							"//    pm.response.to.have.body(pm.globals.get(\"authtoken_key\"));",
+							"//});",
+							"postman.setNextRequest(\"LoginQA\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d64fb09d-8b17-4c48-8867-6dd175a5f4a1",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-app-key",
+						"type": "text",
+						"value": "{{x-app-key-pioneer}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\": \"Sure@123\",\r\n\"username\": \"zdshava.lli+43543@gmail.com\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				},
+				"description": "LogIn_Authtoken"
+			},
+			"response": []
+		},
+		{
+			"name": "LoginQA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddc8f801-de63-426e-9b70-acbaf8d71dfa",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has JSON body\", function () {",
+							"    pm.response.to.be.withBody && pm.response.to.be.json;",
+							"});",
+							"const jsondata= pm.response.json()",
+							"let token = jsondata.response.authToken",
+							"token = token.substring(7)",
+							"console.log(token)",
+							"pm.globals.set(\"bearer_token\",token);",
+							"pm.environment.set(\"variable_key\", \"variable_value\");",
+							"console.log(token.substring(5));",
+							"",
+							"pm.globals.set(\"authtoken_key\", jsondata.response.authToken);",
+							"console.log(pm.globals.get(\"authtoken_key\"))",
+							"console.log(jsondata)",
+							"",
+							"let accountId=jsondata.response.user.account.href",
+							"let arry = accountId.split('/');",
+							"console.log(arry)",
+							"console.log('---')",
+							"console.log(arry[2])",
+							"console.log(arry[arry.length-1])",
+							"pm.globals.set(\"accId\",arry[arry.length-1])",
+							"pm.globals.set(\"accountId\", accountId.substring(accountId.length-4));",
+							"console.log(accountId.substring(accountId.length-4))",
+							"console.log(pm.globals.get(\"accId\"))",
+							"//console.log(pm.globals.get(accId))",
+							"",
+							"pm.test(\"User_id\", function () {",
+							"       pm.expect(jsondata.response.user.id).to.eql(22974);",
+							"});",
+							"",
+							"pm.test(\"LotSmart application verifcations\", function() {",
+							"    pm.expect(jsondata.response.user.applications[0].title).to.eql(pm.globals.get(\"applications1\"));",
+							"    pm.expect(jsondata.response.user.applications[1].title).to.eql(pm.globals.get(\"applications2\"))",
+							"})",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"authtoken_key\"));",
+							"});",
+							"",
+							"// const customerId = Math.floor((Math.random()*100)+1);",
+							"//pm.globals.set(\"customerId\",customerId)",
+							"//console.log(customerId)",
+							"// {{$randomInt}}",
+							"//Math.random().toString(36).substring(7);",
+							"//const response = pm.response.json()'",
+							"//console.log();",
+							"",
+							"// pm.globals.set(\"orderid\", response.id)'",
+							"// in request body use orderid as {{orderid}}",
+							"//pm.variables.get(\"url\");  -> scope variables",
+							"//pm.globals.get(\"url\");   -> Global variables",
+							"// extemal json file to use in postman",
+							"// Using extenal file for data collections",
+							"//open a json file -> data.json",
+							"//[ {},{}] step1",
+							"// select collection runner  and select collection that would like to run",
+							"// -- click on select file option",
+							"// -- and select json file that has test data",
+							"// Redefine json data file [ {customerId : 900, ProductId : 200}, {customerId : 9040, ProductId : 2300},{customerId : 9010, ProductId : 2001}] from step1 ->2",
+							"// User above information request body properties {{customerId }} without double quetations",
+							"// Running test scripts in with environment variable",
+							"// 1) save all test validation to environament variables as a string+ in Pre-request script",
+							"// 2) call variable func in test script : eval(pm.environment.get(\"commonTests\"))();",
+							"// Import request from browser to post"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "77f6c633-acfe-47e3-a828-1cc7d0f210ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-app-key",
+						"value": "{{x-app-key}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\": \"Sure@123\",\r\n\"username\": \"zdsh.va.lli+8796@gmail.com\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				},
+				"description": "LogIn_Authtoken"
+			},
+			"response": []
+		},
+		{
+			"name": "LoginQA_LS_Dealer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddc8f801-de63-426e-9b70-acbaf8d71dfa",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has JSON body\", function () {",
+							"    pm.response.to.be.withBody && pm.response.to.be.json;",
+							"});",
+							"const jsondata= pm.response.json()",
+							"let token = jsondata.response.authToken",
+							"token = token.substring(7)",
+							"console.log(token)",
+							"pm.globals.set(\"bearer_token\",token);",
+							"pm.environment.set(\"variable_key\", \"variable_value\");",
+							"console.log(token.substring(5));",
+							"",
+							"pm.globals.set(\"authtoken_key\", jsondata.response.authToken);",
+							"console.log(pm.globals.get(\"authtoken_key\"))",
+							"console.log(jsondata)",
+							"",
+							"let accountId=jsondata.response.user.account.href",
+							"let arry = accountId.split('/');",
+							"console.log(arry)",
+							"console.log('---')",
+							"console.log(arry[2])",
+							"console.log(arry[arry.length-1])",
+							"pm.globals.set(\"accId\",arry[arry.length-1])",
+							"pm.globals.set(\"accountId\", accountId.substring(accountId.length-4));",
+							"console.log(accountId.substring(accountId.length-4))",
+							"console.log(pm.globals.get(\"accId\"))",
+							"//console.log(pm.globals.get(accId))",
+							"",
+							"pm.test(\"User_id\", function () {",
+							"       pm.expect(jsondata.response.user.id).to.eql(18300);",
+							"});",
+							"",
+							"pm.test(\"LotSmart application verifcations\", function() {",
+							"    pm.expect(jsondata.response.user.applications[0].title).to.eql(pm.globals.get(\"applications1\"));",
+							"    pm.expect(jsondata.response.user.applications[1].title).to.eql(pm.globals.get(\"applications2\"))",
+							"})",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"authtoken_key\"));",
+							"});",
+							"",
+							"postman.setNextRequest(\"LoginQA_Dealer\");",
+							"// const customerId = Math.floor((Math.random()*100)+1);",
+							"//pm.globals.set(\"customerId\",customerId)",
+							"//console.log(customerId)",
+							"// {{$randomInt}}",
+							"//Math.random().toString(36).substring(7);",
+							"//const response = pm.response.json()'",
+							"//console.log();",
+							"",
+							"// pm.globals.set(\"orderid\", response.id)'",
+							"// in request body use orderid as {{orderid}}",
+							"//pm.variables.get(\"url\");  -> scope variables",
+							"//pm.globals.get(\"url\");   -> Global variables",
+							"// extemal json file to use in postman",
+							"// Using extenal file for data collections",
+							"//open a json file -> data.json",
+							"//[ {},{}] step1",
+							"// select collection runner  and select collection that would like to run",
+							"// -- click on select file option",
+							"// -- and select json file that has test data",
+							"// Redefine json data file [ {customerId : 900, ProductId : 200}, {customerId : 9040, ProductId : 2300},{customerId : 9010, ProductId : 2001}] from step1 ->2",
+							"// User above information request body properties {{customerId }} without double quetations",
+							"// Running test scripts in with environment variable",
+							"// 1) save all test validation to environament variables as a string+ in Pre-request script",
+							"// 2) call variable func in test script : eval(pm.environment.get(\"commonTests\"))();",
+							"// Import request from browser to post"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "77f6c633-acfe-47e3-a828-1cc7d0f210ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-app-key",
+						"type": "text",
+						"value": "{{x-app-key}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\": \"Sure@123\",\r\n\"username\": \"zd.shaval.li+321@gmail.com\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				},
+				"description": "LogIn_Authtoken"
+			},
+			"response": []
+		},
+		{
+			"name": "LoginQA_Dealer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddc8f801-de63-426e-9b70-acbaf8d71dfa",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has JSON body\", function () {",
+							"    pm.response.to.be.withBody && pm.response.to.be.json;",
+							"});",
+							"const jsondata= pm.response.json()",
+							"let token = jsondata.response.authToken",
+							"token = token.substring(7)",
+							"console.log(token)",
+							"pm.globals.set(\"bearer_token\",token);",
+							"pm.environment.set(\"variable_key\", \"variable_value\");",
+							"console.log(token.substring(5));",
+							"",
+							"pm.globals.set(\"authtoken_key\", jsondata.response.authToken);",
+							"console.log(pm.globals.get(\"authtoken_key\"))",
+							"console.log(jsondata)",
+							"",
+							"let accountId=jsondata.response.user.account.href",
+							"let arry = accountId.split('/');",
+							"console.log(arry)",
+							"console.log('---')",
+							"console.log(arry[2])",
+							"console.log(arry[arry.length-1])",
+							"pm.globals.set(\"accId\",arry[arry.length-1])",
+							"pm.globals.set(\"accountId\", accountId.substring(accountId.length-4));",
+							"console.log(accountId.substring(accountId.length-4))",
+							"console.log(pm.globals.get(\"accId\"))",
+							"//console.log(pm.globals.get(accId))",
+							"",
+							"pm.test(\"User_id\", function () {",
+							"       pm.expect(jsondata.response.user.id).to.eql(26702);",
+							"});",
+							"",
+							"pm.test(\"LotSmart application verifcations\", function() {",
+							"    pm.expect(jsondata.response.user.applications[0].title).to.eql(pm.globals.get(\"applications1\"));",
+							"    pm.expect(jsondata.response.user.applications[1].title).to.eql(pm.globals.get(\"applications2\"))",
+							"})",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"authtoken_key\"));",
+							"});",
+							"",
+							"postman.setNextRequest(\"LoginQA\");",
+							"// const customerId = Math.floor((Math.random()*100)+1);",
+							"//pm.globals.set(\"customerId\",customerId)",
+							"//console.log(customerId)",
+							"// {{$randomInt}}",
+							"//Math.random().toString(36).substring(7);",
+							"//const response = pm.response.json()'",
+							"//console.log();",
+							"",
+							"// pm.globals.set(\"orderid\", response.id)'",
+							"// in request body use orderid as {{orderid}}",
+							"//pm.variables.get(\"url\");  -> scope variables",
+							"//pm.globals.get(\"url\");   -> Global variables",
+							"// extemal json file to use in postman",
+							"// Using extenal file for data collections",
+							"//open a json file -> data.json",
+							"//[ {},{}] step1",
+							"// select collection runner  and select collection that would like to run",
+							"// -- click on select file option",
+							"// -- and select json file that has test data",
+							"// Redefine json data file [ {customerId : 900, ProductId : 200}, {customerId : 9040, ProductId : 2300},{customerId : 9010, ProductId : 2001}] from step1 ->2",
+							"// User above information request body properties {{customerId }} without double quetations",
+							"// Running test scripts in with environment variable",
+							"// 1) save all test validation to environament variables as a string+ in Pre-request script",
+							"// 2) call variable func in test script : eval(pm.environment.get(\"commonTests\"))();",
+							"// Import request from browser to post"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "77f6c633-acfe-47e3-a828-1cc7d0f210ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-app-key",
+						"value": "{{x-app-key}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\": \"Sure@123\",\r\n\"username\": \"zdshaval.lli+9116@gmail.com\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/v1/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				},
+				"description": "LogIn_Authtoken"
+			},
+			"response": []
+		},
+		{
+			"name": "Sub-acc LogInAcc",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f53ad461-c579-4e88-99b1-be45f80baa1b",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 8000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(8000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " {{authtoken_key}}",
+						"type": "text"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Referer",
+						"value": " https://qainventory.lojack.com/",
+						"type": "text"
+					},
+					{
+						"key": "x-app-key",
+						"value": "{{x-app-key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/v1/accounts/{{accountId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sub_account req",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "270eded7-7cb4-44b9-a966-36de65c07b7b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "021eccf4-9831-472f-978d-6a984ebad4d9",
+						"exec": [
+							"accId = pm.globals.get(\"accountId\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+						"key": "Authorization",
+						"value": " {{authtoken_key}}",
+						"type": "text"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Referer",
+						"value": " https://qainventory.lojack.com/",
+						"type": "text"
+					},
+					{
+						"key": "x-app-key",
+						"value": "{{x-app-key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"search\":{\"maxResults\":\"25\",\"searchTerms\":{\"parent\":\"{{accountId}}\"},\"sort\":[\"+name\"]}}"
+				},
+				"url": {
+					"raw": "https://qaapi.lojack.com/v1/accounts/search?pg=1&pgsize=25",
+					"protocol": "https",
+					"host": [
+						"qaapi",
+						"lojack",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"search"
+					],
+					"query": [
+						{
+							"key": "pg",
+							"value": "1"
+						},
+						{
+							"key": "pgsize",
+							"value": "25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sub-accsearch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11c37db0-2f06-4950-be70-4b5b834250ee",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " {{authtoken_key}}",
+						"type": "text"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Referer",
+						"value": " https://qainventory.lojack.com/",
+						"type": "text"
+					},
+					{
+						"key": "x-app-key",
+						"value": "{{x-app-key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/v1/accounts/5407/subaccounts?v=2.1&hierLevel=10",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"5407",
+						"subaccounts"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "2.1"
+						},
+						{
+							"key": "hierLevel",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reporting token search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11c37db0-2f06-4950-be70-4b5b834250ee",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let jsonData = pm.response.json();",
+							"",
+							"",
+							"pm.test(\"Response has JSON body\", function () {",
+							"    pm.response.to.be.withBody && pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Did return token\", function() {",
+							"   pm.expect(jsonData.results.token.length === 128).to.be.true",
+							"});",
+							"",
+							"pm.test(\"Returned no errors\", function() {",
+							"    //var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.results.length).to.equal(null);",
+							"});",
+							"",
+							"pm.test(\"Returned pp token\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('results') ",
+							"    && pm.expect(jsonData.results.token.length).to.not.equal(0);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": " {{authtoken_key}}"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"type": "text",
+						"value": "cors"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"type": "text",
+						"value": " https://qainventory.lojack.com/"
+					},
+					{
+						"key": "x-app-key",
+						"type": "text",
+						"value": "{{x-app-key}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/v1/reporting/token/{{accountId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"v1",
+						"reporting",
+						"token",
+						"{{accountId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sd_activationV2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoVG9rZW4iOiJPQ1V5Um1SdGFsQnFTakJvVUNVeVJrdGpPV1YwUkZSSE1tY2xNMFFsTTBRNlJWTlNNbVF3Wkcwd1NYWkVSRXRVZFRJMlVrY3hVU1V6UkNVelJBIiwidXNlcklkIjoyMjk3NCwiYWNjb3VudElkIjo1NDA3LCJwYXJlbnRBY2NvdW50SWQiOjUzMjQsImZpcnN0TmFtZSI6IlFBdXNlciIsImxhc3ROYW1lIjoidXNlcjIiLCJ1c2VybmFtZSI6Inpkc2gudmEubGxpKzg3OTZAZ21haWwuY29tIiwiZW1haWwiOiJ6ZHNoLnZhLmxsaSs4Nzk2QGdtYWlsLmNvbSIsInJvbGVzIjoiW3tcImhyZWZcIjpcImh0dHBzOi8vcWEuY29ubmVjdC5jYWxhbXAuY29tOjQ0My9jb25uZWN0L3NlcnZpY2VzL3JvbGVzLzU1MTdcIixcInJlbFwiOlwicm9sZVwiLFwidGl0bGVcIjpcIkxvdFNtYXJ0IFNhbGVzIEFzc2lzdGFudFwiLFwic3RhdHVzXCI6XCJFbmFibGVkXCJ9LHtcImhyZWZcIjpcImh0dHBzOi8vcWEuY29ubmVjdC5jYWxhbXAuY29tOjQ0My9jb25uZWN0L3NlcnZpY2VzL3JvbGVzLzI1NjNcIixcInJlbFwiOlwicm9sZVwiLFwidGl0bGVcIjpcIlN1cmVEcml2ZSBBZG1pbiBVc2VyXCIsXCJzdGF0dXNcIjpcIkVuYWJsZWRcIn1dIiwieEFwcEtleSI6ImFiNGI0ZDk5LTkzZDQtNDIzOS1hZjU5LTk2NTg3ODM5OTkxYyIsImlhdCI6MTU3MTc2NTQ2N30.M41J4_WXjkmhp9oRw4sQRTOp4OQnYyYH3LW9pN6UrTc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-app-key",
+						"value": "ab4b4d99-93d4-4239-af59-96587839991c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\":\"rdrive\",\"lastName\":\"v2activation\",\"phoneNumbers\":\"3958930458\",\"email\":\"zdsh.ava.lli+1999@gmail.com\",\"airtimePlanId\":140,\"deviceId\":127649,\"deviceOnly\":true}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qaapi.lojack.com/v2/accounts/suredrive",
+					"protocol": "https",
+					"host": [
+						"qaapi",
+						"lojack",
+						"com"
+					],
+					"path": [
+						"v2",
+						"accounts",
+						"suredrive"
+					]
+				},
+				"description": "Collections"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "98911304-a206-43ef-9bcb-2563a44d1599",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "50043afd-c434-412b-a1d0-911aa8a97c52",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

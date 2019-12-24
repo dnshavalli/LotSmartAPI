@@ -1,0 +1,44 @@
+{
+	"id": "146e52f0-fd32-4814-8e58-8a3c0f4d5eb7",
+	"values": [
+		{
+			"key": "authtoken_key",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoVG9rZW4iOiJTamhHWlZaMU0xSm1kelE0UW1abFNtMXZka0ZTVVNVelJDVXpSRHBsWXpBekpUSkNZM0J6YjJ4dFRVZFNibVppVkhOMVZrRWxNMFFsTTBRIiwidXNlcklkIjoyNjcwMiwiYWNjb3VudElkIjoxMjE1NiwicGFyZW50QWNjb3VudElkIjo1NTg1LCJmaXJzdE5hbWUiOiJ0ZXN0R2VvaXNlcjIxIiwibGFzdE5hbWUiOiJ1c2VydGVzdDM1NDM1NCIsInVzZXJuYW1lIjoiemRzaGF2YWwubGxpKzkxMTZAZ21haWwuY29tIiwiZW1haWwiOiJ6ZHNoYXZhbC5sbGkrOTExNkBnbWFpbC5jb20iLCJyb2xlcyI6Ilt7XCJocmVmXCI6XCJodHRwczovL3FhLmNvbm5lY3QuY2FsYW1wLmNvbTo0NDMvY29ubmVjdC9zZXJ2aWNlcy9yb2xlcy8yNTYzXCIsXCJyZWxcIjpcInJvbGVcIixcInRpdGxlXCI6XCJTdXJlRHJpdmUgQWRtaW4gVXNlclwiLFwic3RhdHVzXCI6XCJFbmFibGVkXCJ9LHtcImhyZWZcIjpcImh0dHBzOi8vcWEuY29ubmVjdC5jYWxhbXAuY29tOjQ0My9jb25uZWN0L3NlcnZpY2VzL3JvbGVzLzI4NDFcIixcInJlbFwiOlwicm9sZVwiLFwidGl0bGVcIjpcIkxvdFNtYXJ0IEFkbWluIEFzc2lzdGFudFwiLFwic3RhdHVzXCI6XCJFbmFibGVkXCJ9XSIsInhBcHBLZXkiOiJhYjRiNGQ5OS05M2Q0LTQyMzktYWY1OS05NjU4NzgzOTk5MWMiLCJpYXQiOjE1NzUxODE1NTV9.caoh7ZNZd-EBb9OonmbeXgpNFyy44AGMNhYpzw67Sr0",
+			"enabled": true
+		},
+		{
+			"key": "applications1",
+			"value": "SureDrive",
+			"enabled": true
+		},
+		{
+			"key": "applications2",
+			"value": "Lotsmart Password",
+			"enabled": true
+		},
+		{
+			"key": "bearer_key",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoVG9rZW4iOiJNbUZyTmtoclYyNVdSRkI0YTFGVk9WUm5iRW8zUVNVelJDVXpSRHBRZFU5UFdqRTJjMGw1Y0d4a2NtNDRRMlZxZFdsbkpUTkVKVE5FIiwidXNlcklkIjoxOTAyOCwiYWNjb3VudElkIjo1NDA3LCJwYXJlbnRBY2NvdW50SWQiOjUzMjQsImZpcnN0TmFtZSI6ImxvamFja0NUQ2Z1c3IiLCJsYXN0TmFtZSI6IlZGU1ZDMG9FIiwidXNlcm5hbWUiOiJ6ZHNoYS52YWxsaSsxOTc2QGdtYWlsLmNvbSIsImVtYWlsIjoiemRzaGEudmFsbGkrMTk3NkBnbWFpbC5jb20iLCJyb2xlcyI6Ilt7XCJocmVmXCI6XCJodHRwczovL3FhLmNvbm5lY3QuY2FsYW1wLmNvbTo0NDMvY29ubmVjdC9zZXJ2aWNlcy9yb2xlcy8yNTYzXCIsXCJyZWxcIjpcInJvbGVcIixcInRpdGxlXCI6XCJTdXJlRHJpdmUgQWRtaW4gVXNlclwiLFwic3RhdHVzXCI6XCJFbmFibGVkXCJ9LHtcImhyZWZcIjpcImh0dHBzOi8vcWEuY29ubmVjdC5jYWxhbXAuY29tOjQ0My9jb25uZWN0L3NlcnZpY2VzL3JvbGVzLzI4NDBcIixcInJlbFwiOlwicm9sZVwiLFwidGl0bGVcIjpcIkxvdFNtYXJ0IEFkbWluIFVzZXJcIixcInN0YXR1c1wiOlwiRW5hYmxlZFwifV0iLCJ4QXBwS2V5IjoiYWI0YjRkOTktOTNkNC00MjM5LWFmNTktOTY1ODc4Mzk5OTFjIiwiaWF0IjoxNTY2MjE1OTQzfQ.2cnUDyeIhaoH3i7dWf2Ew3FY7Gk2zIo2EDK0a1euZug",
+			"enabled": true
+		},
+		{
+			"key": "bearer_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoVG9rZW4iOiJTamhHWlZaMU0xSm1kelE0UW1abFNtMXZka0ZTVVNVelJDVXpSRHBsWXpBekpUSkNZM0J6YjJ4dFRVZFNibVppVkhOMVZrRWxNMFFsTTBRIiwidXNlcklkIjoyNjcwMiwiYWNjb3VudElkIjoxMjE1NiwicGFyZW50QWNjb3VudElkIjo1NTg1LCJmaXJzdE5hbWUiOiJ0ZXN0R2VvaXNlcjIxIiwibGFzdE5hbWUiOiJ1c2VydGVzdDM1NDM1NCIsInVzZXJuYW1lIjoiemRzaGF2YWwubGxpKzkxMTZAZ21haWwuY29tIiwiZW1haWwiOiJ6ZHNoYXZhbC5sbGkrOTExNkBnbWFpbC5jb20iLCJyb2xlcyI6Ilt7XCJocmVmXCI6XCJodHRwczovL3FhLmNvbm5lY3QuY2FsYW1wLmNvbTo0NDMvY29ubmVjdC9zZXJ2aWNlcy9yb2xlcy8yNTYzXCIsXCJyZWxcIjpcInJvbGVcIixcInRpdGxlXCI6XCJTdXJlRHJpdmUgQWRtaW4gVXNlclwiLFwic3RhdHVzXCI6XCJFbmFibGVkXCJ9LHtcImhyZWZcIjpcImh0dHBzOi8vcWEuY29ubmVjdC5jYWxhbXAuY29tOjQ0My9jb25uZWN0L3NlcnZpY2VzL3JvbGVzLzI4NDFcIixcInJlbFwiOlwicm9sZVwiLFwidGl0bGVcIjpcIkxvdFNtYXJ0IEFkbWluIEFzc2lzdGFudFwiLFwic3RhdHVzXCI6XCJFbmFibGVkXCJ9XSIsInhBcHBLZXkiOiJhYjRiNGQ5OS05M2Q0LTQyMzktYWY1OS05NjU4NzgzOTk5MWMiLCJpYXQiOjE1NzUxODE1NTV9.caoh7ZNZd-EBb9OonmbeXgpNFyy44AGMNhYpzw67Sr0",
+			"enabled": true
+		},
+		{
+			"key": "accountId",
+			"value": "2156",
+			"enabled": true
+		},
+		{
+			"key": "accId",
+			"value": "12156",
+			"enabled": true
+		}
+	],
+	"name": "My Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2019-12-01T06:30:44.837Z",
+	"_postman_exported_using": "Postman/7.12.0"
+}
