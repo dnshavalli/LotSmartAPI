@@ -1,1 +1,1 @@
-# LotSmartAPI
+# LotSmartAPI using webhook functionality
